@@ -4,7 +4,11 @@ import cst8284.junit.lab4.Currency;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import javax.print.attribute.standard.ReferenceUriSchemesSupported;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,16 +42,19 @@ public class CurrencyTest {
     @Test
     public void testEquals_WhenEquals() {
         Currency secondCurrency = new Currency(MONEY_CODE);
-
-        fail ("Not Implemented"); //TODO
+        
+        Currency result = currency;
+        assertEquals(result, secondCurrency);
         
     }
 
     @Test
     public void testEquals_WhenNotEquals() {
         Currency secondCurrency = new Currency(DIFFERENT_MONEY_CODE);
+        
+        Currency result = currency;
+        assertFalse(result.equals(secondCurrency));
 
-        fail ("Not Implemented"); //TODO
         
     }
 
@@ -63,7 +70,12 @@ public class CurrencyTest {
     
     @Test
     public void testHashCode_False() {
-       fail ("Not implemented"); //TODO
+        Currency secondCurrency = new Currency(DIFFERENT_MONEY_CODE);
+        
+        int firstHash = currency.hashCode();
+        int secondHash = secondCurrency.hashCode();
+
+        assertFalse(firstHash == secondHash);
     	
     }
   

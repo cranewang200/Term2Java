@@ -36,6 +36,11 @@ public class Counter {
      * @return new counter value
      */
     public int increment() {
+    	
+    	if(count >= Integer.MAX_VALUE  ) {
+    		return 0;
+    	}
+    	
     	return ++count;
    
     }
@@ -46,6 +51,11 @@ public class Counter {
      * @return new counter value
      */
     public int decrement() {
+    	
+    	if (count <= 0) {
+    		return 0;
+    	}
+    	
         return --count;
     }
 
@@ -66,6 +76,11 @@ public class Counter {
      * @return newly created counter
      */
     public Counter add(Counter c) {
+    	
+    	if ((this.count + c.count) >= Integer.MAX_VALUE) {
+    		return new Counter();
+    	}
+    	
         return new Counter(this.count + c.count);
     }
 
@@ -77,6 +92,11 @@ public class Counter {
      * @return newly created counter
      */
     public Counter sub(Counter c) {
+    	
+    	if((this.count - c.count) <= 0) {
+    		return new Counter();
+    	}
+    	
         return new Counter(this.count - c.count);
 
     }

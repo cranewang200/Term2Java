@@ -24,22 +24,41 @@ public class MoneyTest {
 
     @Test
     public void testGetPrice_True() {
-    	 fail ("not implemented"); //TODO
+    	
+    	BigDecimal result = money.getPrice();
+    	
+    	assertTrue(result == PRICE);
+    	
+
     }
     
     @Test
     public void testGetPrice_False() {
-        fail ("not implemented"); //TODO
+    	
+    	BigDecimal result = money.getPrice();
+    	
+    	assertFalse(result == DIFFERENT_PRICE);
+    	
     }
 
     @Test
     public void testGetCurrency_True() {
-    	 fail ("not implemented"); //TODO
+    	
+    	Currency result = money.getCurrency();
+    	
+    	assertTrue(result.equals(currency));
+    	
+
     }
 
     @Test
     public void testGetCurrency_False() {
-    		fail ("not implemented"); //TODO
+    	Currency result = money.getCurrency();
+    	
+    	assertFalse(!result.equals(currency));
+    	
+    	
+//    		fail ("not implemented"); //TODO
     }
     
     @Test
@@ -51,22 +70,39 @@ public class MoneyTest {
 
     @Test
     public void testEquals_WhenNotEquals() {
+
+    	Money secondMoney = new Money(DIFFERENT_PRICE, currency);
+    	
+    	assertFalse(money.hashCode() == secondMoney.hashCode());
+    	
+    	
+    	
     	// Create another money object 
     	// Verify that the hash code for money is different
     	// from the hash code of this new object
-    	fail ("Not implemented"); //TODO
+//    	fail ("Not implemented"); //TODO
     }
 
     @Test
     public void testHashCode_Equal() {
+    	
+
+    	Money secondMoney = new Money(PRICE, currency);
+    	
+    	assertTrue(money.hashCode() == secondMoney.hashCode());
+    	
     	// Create a money object  with a different currency
     	// Verify that the hash code for money is different
     	// from the hash code of this new object
-    	 fail ("Not implemented"); //TODO
+//    	 fail ("Not implemented"); //TODO
     }
     
     @Test
     public void testHashCode_NotEqual() {
-        fail ("Not Implemented"); //TODO
+    	
+    	Money secondMoney = new Money(DIFFERENT_PRICE, currency);
+    	
+    	assertTrue(money.hashCode() != secondMoney.hashCode());
+//        fail ("Not Implemented"); //TODO
     }
 }
