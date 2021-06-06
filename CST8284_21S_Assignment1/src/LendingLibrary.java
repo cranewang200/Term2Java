@@ -1,3 +1,4 @@
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 
@@ -30,9 +31,9 @@ public class LendingLibrary {
 	private static int lastUserIndex;
 	private static int lastLoanIndex;
 
-	private static Book[] bookReg = new Book[MAX_BOOK_NUMBER];
-	private static User[] userReg = new User[MAX_USER_NUMBER];
-	private static BookLoan[] loanReg = new BookLoan[MAX_LOAN_NUMBER];
+	private  static  Book[] bookReg = new Book[MAX_BOOK_NUMBER];
+	private  static User[] userReg = new User[MAX_USER_NUMBER];
+	private  static BookLoan[] loanReg = new BookLoan[MAX_LOAN_NUMBER];
 
 	public LendingLibrary() {
 
@@ -68,25 +69,22 @@ public class LendingLibrary {
 	 * @return
 	 */
 	public boolean addUser(User u) {
-		int index = -1;
-		int count = 0;
-		for (User user : userReg) {
-			if (user == null) {
-				index = count;
-				break;
-			}
-			count++;
-		}
+		int index = Integer.MIN_VALUE;
+//		int count = 0;
+//		for (User user : userReg) {
+//			if (user == null) {
+//				index = count;
+//				break;
+//			}
+//			count++;
+//		}
+		LendingLibrary.setLastUserIndex(index);
+		index = LendingLibrary.getLastUserIndex();
 
-//		if (userReg.length == index) {
-//			System.out.println("Maximun user number reached, can not add new user");
+//		if(index >= MAX_USER_NUMBER) {
+//			System.out.println("reach the maximux book");
 //			return false;
 //		}
-		
-		if(index == 4) {
-			System.out.println("reach the maximux book");
-			return false;
-		}
 
 		userReg[index] = u;
 		userReg[index].setId(userReg[index].getId() + index);
@@ -102,18 +100,16 @@ public class LendingLibrary {
 	 * @return if add a book successfully, return true. else return false
 	 */
 	public boolean addBook(Book b) {
-		int count = 0;
-		int index = 0;
-		for (Book book : bookReg) {
-			if (book == null) {
-				index = count;
-				break;
-			}
-			count++;
-		}
-		if (bookReg.length == count) { // if the bookReg array to reaching the maxmum size , 10
-			return false; // return false, can't add a new book
-		}
+
+		int index = Integer.MIN_VALUE;
+		LendingLibrary.setLastBookIndex(index);
+		index = LendingLibrary.getLastBookIndex();
+		
+//		if (bookReg.length >= MAX_BOOK_NUMBER ) { // if the bookReg array to reaching the maxmum size , 10
+//			System.out.println("reach to the maximun book number");
+//			return false;
+//		}	
+		
 		bookReg[index] = b; // store the new book to the last position of bookReg array
 		return true; // add a new book successfully
 	}
@@ -206,7 +202,8 @@ public class LendingLibrary {
 	 */
 	public Book findBook(String isbnNumber) {
 		int count = 0;
-		int index = -1;
+		int index = -1;	
+
 		for (Book book : bookReg) {
 			if (book.getIsbnNumber().equals(isbnNumber)) {
 				index = count;										
@@ -214,7 +211,8 @@ public class LendingLibrary {
 			}
 			count++;
 		}
-		if (index == -1) {
+		
+		if (index < 0) {
 			System.out.println("Could not find a book with this isbn!");
 		}
 		bookReg[index].toString();	
@@ -308,4 +306,63 @@ public class LendingLibrary {
 		LendingLibrary.loanReg = loanReg;
 	}
 
+	
+	public static int getLastBookIndex() {
+		return lastBookIndex;
+	}
+
+	public static void setLastBookIndex(int lastBookIndex) {
+
+				
+		int index = 0;
+		for (Book book : bookReg) {
+			if (book == null) {
+				lastBookIndex = index;
+				break;
+			}
+			index++;
+		}
+	
+		
+		LendingLibrary.lastBookIndex = lastBookIndex;
+	}
+
+	public static int getLastUserIndex() {
+		return lastUserIndex;
+	}
+
+	public static void setLastUserIndex(int lastUserIndex) {
+		
+		int index = 0;
+		for(User user : userReg) {
+			if(user == null) {
+				lastUserIndex = index;
+				break;
+			}
+			index++;
+		}
+		if(userReg.length == MAX_USER_NUMBER ) {
+			System.out.println("reach maximum user number");
+			lastUserIndex = 4;
+		}
+		LendingLibrary.lastUserIndex = lastUserIndex;
+
+	}
+
+	public static int getLastLoanIndex() {
+		return lastLoanIndex;
+	}
+
+	public static void setLastLoanIndex(int lastLoanIndex) {
+		
+		
+		
+		
+		
+		LendingLibrary.lastLoanIndex = lastLoanIndex;
+	}
+
+	
+	
+	
 }
