@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class LendingLibraryController {
 	
 	private LendingLibrary bookLib;
-	private Scanner input = new Scanner(System.in);
+	private static Scanner input = new Scanner(System.in);
 	
 	public LendingLibraryController() {
 		
@@ -132,6 +132,7 @@ public class LendingLibraryController {
 		
 		Book book = new Book("","","","");
 		book = bookLib.findBook(isbn);
+		
 		
 		title = getResponseTo("Change title:");
 		book.setTitle(title);
