@@ -193,7 +193,7 @@ public class LendingLibraryController {
 		
 		User user = new User("","","");
 		Book book = new Book("","","","");
-		LendingLibrary lendingLibrary = new LendingLibrary();
+//		bookLib = new LendingLibrary();
 	
 		String date = "";
 		System.out.println("New Loan Entry");
@@ -202,7 +202,7 @@ public class LendingLibraryController {
 		book.setIsbnNumber(getResponseTo("Book isbn number"));	
 		date = getResponseTo("Loan date (format yyyy-mm-dd)");
 		BookLoan bookLoan = new BookLoan(user, book, date);
-		lendingLibrary.addLoan(bookLoan);
+		bookLib.addLoan(bookLoan);
 
 
 		
