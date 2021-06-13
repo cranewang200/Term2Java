@@ -30,7 +30,11 @@ public class Counter {
         count = c;
     }
 
-    /**
+    public void setCount(int count) {
+		this.count = count;
+	}
+
+	/**
      *  increments counter value
      *
      * @return new counter value
@@ -76,8 +80,8 @@ public class Counter {
      * @return newly created counter
      */
     public Counter add(Counter c) {
-    	
-    	if ((this.count + c.count) >= Integer.MAX_VALUE) {
+    	long result = ((long)this.count + (long)c.count);
+    	if (result >= Integer.MAX_VALUE) {
     		return new Counter();
     	}
     	
@@ -95,9 +99,11 @@ public class Counter {
     	
     	if((this.count - c.count) <= 0) {
     		return new Counter();
+    	}else {
+    		return new Counter(this.count - c.count);
     	}
     	
-        return new Counter(this.count - c.count);
+        
 
     }
     

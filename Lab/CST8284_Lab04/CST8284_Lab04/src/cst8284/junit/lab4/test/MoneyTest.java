@@ -2,6 +2,8 @@ package cst8284.junit.lab4.test;
 
 import java.math.BigDecimal;
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,30 +59,28 @@ public class MoneyTest {
     	
     	assertFalse(!result.equals(currency));
     	
-    	
-//    		fail ("not implemented"); //TODO
+
     }
     
     @Test
     public void testEquals_WhenEquals() {
         Money secondMoney = new Money(PRICE, currency);
-
         assertTrue(money.equals(secondMoney));
+        
+        //test when two money object has the same price and currency, then they are equals
     }
 
     @Test
     public void testEquals_WhenNotEquals() {
 
     	Money secondMoney = new Money(DIFFERENT_PRICE, currency);
-    	
+    	assertFalse(money.equals(secondMoney));
     	assertFalse(money.hashCode() == secondMoney.hashCode());
-    	
-    	
-    	
+ 
     	// Create another money object 
     	// Verify that the hash code for money is different
     	// from the hash code of this new object
-//    	fail ("Not implemented"); //TODO
+
     }
 
     @Test
@@ -91,10 +91,10 @@ public class MoneyTest {
     	
     	assertTrue(money.hashCode() == secondMoney.hashCode());
     	
-    	// Create a money object  with a different currency
-    	// Verify that the hash code for money is different
+    	// Create a money object  with a same currency
+    	// Verify that the hash code for money is same
     	// from the hash code of this new object
-//    	 fail ("Not implemented"); //TODO
+
     }
     
     @Test
@@ -102,7 +102,17 @@ public class MoneyTest {
     	
     	Money secondMoney = new Money(DIFFERENT_PRICE, currency);
     	
-    	assertTrue(money.hashCode() != secondMoney.hashCode());
-//        fail ("Not Implemented"); //TODO
+    	assertFalse(money.hashCode() == secondMoney.hashCode());
+
     }
+    
+    @Test
+    public void testHashCode() {
+    	    	
+    	assertTrue(money.hashCode() == PRICE.hashCode() + currency.hashCode());
+    	
+    	//test hashCode method , the result == price.hashCode + currency.hashCode
+    	
+    }
+    
 }

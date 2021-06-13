@@ -40,7 +40,7 @@ public class Currency {
     }
 
     /**
-     * 
+     *override equals method. if the currency code is same then object is same 
      */
     @Override
     public boolean equals(Object obj) {
@@ -53,7 +53,7 @@ public class Currency {
     }
 
     /**
-     * 
+     * return the hashCode of currenty
      */
     @Override
     public int hashCode() {
