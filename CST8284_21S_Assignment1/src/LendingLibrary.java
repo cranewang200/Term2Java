@@ -31,34 +31,23 @@ public class LendingLibrary {
 	private static int lastUserIndex;
 	private static int lastLoanIndex;
 
-	private  static Book[] bookReg = new Book[MAX_BOOK_NUMBER];
-	private  static User[] userReg = new User[MAX_USER_NUMBER];
-	private  static BookLoan[] loanReg = new BookLoan[MAX_LOAN_NUMBER];
+	private static Book[] bookReg = new Book[MAX_BOOK_NUMBER];
+	private static User[] userReg = new User[MAX_USER_NUMBER];
+	private static BookLoan[] loanReg = new BookLoan[MAX_LOAN_NUMBER];
 
 	public LendingLibrary() {
 
 	}
 
 	public User makeUser(int id, String firstname, String lastName, String address, int age) {
-		
-		int index = 0;
-		int count = 0;
-		for (User user : userReg) {
-			if (user == null) {
-				index = count;
-				break;
-			}
-			count++;
-		}
-		
-		User user = new User("","","");
+
+		User user = new User("", "", "");
 		user.setId(user.getId());
 		user.setFirstName(firstname);
 		user.setAddress(address);
 		user.setLastName(lastName);
 		user.setAge(age);
-		addUser(user);
-		return user; // caution
+		return user; 
 
 	}
 
@@ -70,20 +59,16 @@ public class LendingLibrary {
 	 */
 	public boolean addUser(User u) {
 		int index = Integer.MIN_VALUE;
-
 		LendingLibrary.setLastUserIndex(index);
 		index = LendingLibrary.getLastUserIndex();
 
-		if(index >= MAX_USER_NUMBER - 1) {
-			System.err.println("reach the maximux User");
-			index = MAX_USER_NUMBER -1;
+		if (index >= MAX_USER_NUMBER - 1) {
+			index = MAX_USER_NUMBER - 1;
 			return false;
 		}
 
 		userReg[index] = u;
 		userReg[index].setId(userReg[index].getId() + index);
-		System.out.println("User was added");
-
 		return true;
 	}
 
@@ -98,13 +83,12 @@ public class LendingLibrary {
 		int index = Integer.MIN_VALUE;
 		LendingLibrary.setLastBookIndex(index);
 		index = LendingLibrary.getLastBookIndex();
-		
-		if (index >= MAX_BOOK_NUMBER - 1 ) { // if the bookReg array to reaching the maxmum size , 10
-			System.err.println("reach to the maximun book number");
+
+		if (index >= MAX_BOOK_NUMBER - 1) { // if the bookReg array to reaching the maxmum size , 10
 			index = MAX_BOOK_NUMBER - 1;
 			return false;
-		}	
-		
+		}
+
 		bookReg[index] = b; // store the new book to the last position of bookReg array
 		return true; // add a new book successfully
 	}
@@ -112,93 +96,50 @@ public class LendingLibrary {
 	public boolean addLoan(BookLoan l) {
 
 		int index = Integer.MIN_VALUE;
-
-		LendingLibrary.setLastLoanIndex(index);  //find the last index of the loan
-	  index = LendingLibrary.getLastLoanIndex(); // get the last index of the loan
 		
+
+		LendingLibrary.setLastLoanIndex(index); // find the last index of the loan
+		index = LendingLibrary.getLastLoanIndex(); // get the last index of the loan
+
 		if (index >= MAX_LOAN_NUMBER - 1) { // if the array of the loan reach the maximum length
-			System.err.println("reach to maximum loan");
-			index = MAX_LOAN_NUMBER - 1;  //set the index to the last index of the loan array. 
-			return false;				// to prevent the program crush.
-		}	
-
-		
-		User user1 = new User("","","");
-		for (User user : userReg) {
-			if(user == null) {
-				System.out.println("No user with this name");
-				return false;
-			}
-			if ((l.getUser().getFirstName().toLowerCase().equals(user.getFirstName().toLowerCase()) ) || 
-				(l.getUser().getLastName().toLowerCase().equals(user.getLastName().toLowerCase()))){	
-				user1 = user;
-				break;					
-			}else {
-
+			index = MAX_LOAN_NUMBER - 1; // set the index to the last index of the loan array.
+			return false; // to prevent the program crush.
 		}
-		}
-		
-		if (!((l.getUser().getFirstName().toLowerCase().equals(user1.getFirstName().toLowerCase()) ) || 
-				(l.getUser().getLastName().toLowerCase().equals(user1.getLastName().toLowerCase())))) {
-			System.out.println("No user with this name");
+
+		if (!userCanBorrow(l.getUser())) {
 			return false;
-		}
-			
-		Book book1= new Book("","","","");
-		
-		for(Book book : bookReg) {
-			if(book == null) {
-				System.out.println("Could not find a book with this isbn");
-				return false;
-			}
 
-			if(l.getBook().getIsbnNumber().toLowerCase().equals(book.getIsbnNumber().toLowerCase())) {
-				book1 = book;
-				break;
-			}
-
-		}
-		if (!(l.getBook().getIsbnNumber().toLowerCase().equals(book1.getIsbnNumber().toLowerCase()))) {
-			System.out.println("Could not find a book with this isbn");
+		} else if (isBookLoaned(l.getBook())) {
 			return false;
+
 		}
 		
 		
-		if(!userCanBorrow(l.getUser())) {
-			System.out.println("user can not borrow more");
-			
-		}else if(!isBookLoaned(l.getBook())){
-			System.out.println("Book already loaned");
-			
-		}
-		if((userCanBorrow(l.getUser())) || isBookLoaned(l.getBook())){			
+		if ((userCanBorrow(l.getUser())) || isBookLoaned(l.getBook())) {
 			loanReg[index] = l;
-			loanReg[index].setBook(book1); //set the finding book object to bookLoan 
-			loanReg[index].setUser(user1); //set the finding user object to bookLoan
+			loanReg[index].setBook(l.getBook()); // set the finding book object to bookLoan
+			loanReg[index].setUser(l.getUser()); // set the finding user object to bookLoan
 		}
-		System.out.println("Loan added");
-	
+		
+
 		return true;
-	
-}
+
+	}
 
 	public User findUser(String firstName, String lastName) {
 		int count = 0;
 		int index = 0;
+		
 		for (User user : userReg) {
-			if ((firstName.equals(user.getFirstName())) || 
-				(lastName.equals(user.getLastName()))){
+			if ((firstName.equals(user.getFirstName())) || (lastName.equals(user.getLastName()))) {
 				index = count;
-				break;					
+				break;
 			}
 			count++;
-			if(count == userReg.length) {
-				System.out.println("User not found");
-				return userReg[index];
+			if (count == userReg.length) {
+				return user = null;
 			}
 		}
-		
-		userReg[index].toString();
 		return userReg[index];
 	}
 
@@ -210,23 +151,23 @@ public class LendingLibrary {
 	 */
 	public Book findBook(String isbnNumber) {
 		int count = 0;
-		int index = -1;	
+		int index = -1;
+		
 
 		for (Book book : bookReg) {
 			if (book.getIsbnNumber().equals(isbnNumber)) {
-				index = count;										
+				index = count;
 				break;
 			}
-			count++;
-		}
-		
-		if (index < 0) {
-			System.out.println("Could not find a book with this isbn!");
-		}
-		bookReg[index].toString();	
+			count++;			
+			if (count == bookReg.length) {				
+				return book = null;
+			}						
+		}		
 		return bookReg[index];
 	}
 
+	
 	public BookLoan findLoan(String isbnNumber) {
 
 		int count = 0;
@@ -241,7 +182,7 @@ public class LendingLibrary {
 		if (index == -1) {
 			System.out.println("Could not find a book with this isbn!");
 		}
-		 loanReg[index].toString();
+		System.out.println(loanReg[index].toString());
 		return loanReg[index];
 
 	}
@@ -253,22 +194,22 @@ public class LendingLibrary {
 	 * @return
 	 */
 	public boolean userCanBorrow(User u) {
-		
+
 		int count = 0;
-		for (BookLoan bookLoan: loanReg) {
-			if(bookLoan == null) break;
-			if(u.getId() == bookLoan.getUser().getId()) {
+		for (BookLoan bookLoan : loanReg) {
+			if (bookLoan == null)
+				break;
+			if (u.getId() == bookLoan.getUser().getId()) {
 				count++;
-			}						
-		}		
-		if(count >= MAX_LOAN_PER_USER) {	
-			System.out.println("User already load 2 book, Can not loan more");
-			return false;  //user can not borrow
-		}else {
-		return true;  //user can borrow	
+			}
 		}
-		
-		
+		if (count >= MAX_LOAN_PER_USER) {
+			System.out.println("User already load 2 book, Can not loan more");
+			return false; // user can not borrow
+		} else {
+			return true; // user can borrow
+		}
+
 	}
 
 	/**
@@ -278,20 +219,18 @@ public class LendingLibrary {
 	 * @return
 	 */
 	public boolean isBookLoaned(Book b) {
-		
-		for(BookLoan bookLoan : loanReg) {
-			if (bookLoan == null) break;
-			if(bookLoan.getBook().getIsbnNumber().toLowerCase().equals(b.getIsbnNumber().toLowerCase())){
+
+		for (BookLoan bookLoan : loanReg) {
+			if (bookLoan == null)
+				break;
+			if (bookLoan.getBook().getIsbnNumber().toLowerCase().equals(b.getIsbnNumber().toLowerCase())) {
 				System.out.println("Book already loaned");
-				return true;  //book already loaned
+				return true; // book already loaned
 			}
-			
+
 		}
-		return false; //book can be loan
+		return false; // book can be loan
 	}
-	
-	
-	
 
 	public Book[] getBookReg() {
 		return bookReg;
@@ -317,7 +256,6 @@ public class LendingLibrary {
 		LendingLibrary.loanReg = loanReg;
 	}
 
-	
 	public static int getLastBookIndex() {
 		return lastBookIndex;
 	}
@@ -332,7 +270,7 @@ public class LendingLibrary {
 			}
 			index++;
 		}
-			
+
 		LendingLibrary.lastBookIndex = lastBookIndex;
 	}
 
@@ -341,10 +279,10 @@ public class LendingLibrary {
 	}
 
 	public static void setLastUserIndex(int lastUserIndex) {
-		
+
 		int index = 0;
-		for(User user : userReg) {
-			if(user == null) {
+		for (User user : userReg) {
+			if (user == null) {
 				lastUserIndex = index;
 				break;
 			}
@@ -363,21 +301,18 @@ public class LendingLibrary {
 	}
 
 	public static void setLastLoanIndex(int lastLoanIndex) {
-		
-	
+
 		int index = 0;
 		for (BookLoan bookLoan : loanReg) {
 			if (bookLoan == null) {
 				lastLoanIndex = index;
 				break;
-			}index++;
-			
-		}			
-		
+			}
+			index++;
+
+		}
+
 		LendingLibrary.lastLoanIndex = lastLoanIndex;
 	}
 
-	
-	
-	
 }

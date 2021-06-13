@@ -1,21 +1,18 @@
 
-
 /**
  * 
- * Class Name: CST8284-300
- * Author Name: Ming Wang
- * Class Name: Assignment 1
- * Date:Jun 4, 2021
- * Description: Class Book with title, author ,publicationdate, isbnnumber
+ * Class Name: CST8284-300 Author Name: Ming Wang Class Name: Assignment 1
+ * Date:Jun 4, 2021 Description: Class Book with title, author ,publicationdate,
+ * isbnnumber
  */
 public class Book {
-	
+
 	private String title;
 	private String author;
 	private String publicationDate;
 	private String isbnNumber;
-		
-	public Book(String title, String author,String publicationDate,String isbnNumber) {
+
+	public Book(String title, String author, String publicationDate, String isbnNumber) {
 		this.title = title;
 		this.author = author;
 		this.publicationDate = publicationDate;
@@ -53,28 +50,33 @@ public class Book {
 	public void setIsbnNumber(String isbnNumber) {
 		this.isbnNumber = isbnNumber;
 	}
-	
+
 	/**
+	 * verifyISBNNumber method is used to verify the isbn number
 	 * Ensures that the string is exactly 10 digits long.
-	 * @param s
+	 * @param s the isbn input by user
 	 * @return
 	 */
-	
+
 	public boolean verifyISBNNumber(String s) {
+		boolean isBadisbn = true; 
+	
+			if(s.length() == 10) {				
+				isBadisbn = false;
+				return true;
+			}			
 		
-		return true;
+		return false;		
 	}
-	
+
 	@Override
-	
+
 	public String toString() {
 		String msg = "";
-		msg = "************ Title:" +  getTitle() + "\n";
+		msg = "************ Title:" + getTitle() + "\n";
 		msg += "************ Author:" + getAuthor() + "\n";
 		msg += "************ Publication Date:" + getPublicationDate() + "\n";
-		msg +="************ ISBN:" + getIsbnNumber() + "\n";
-		
-		System.out.printf(msg);
+		msg += "************ ISBN:" + getIsbnNumber() + "\n";
 
 		return msg;
 	}
