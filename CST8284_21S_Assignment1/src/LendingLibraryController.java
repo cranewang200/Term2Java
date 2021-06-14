@@ -1,4 +1,7 @@
+import java.util.Objects;
 import java.util.Scanner;
+
+import javax.xml.crypto.Data;
 
 public class LendingLibraryController {
 
@@ -73,8 +76,17 @@ public class LendingLibraryController {
 
 		bookLib = new LendingLibrary();
 
-		User user = new User(first, last, address);
-		user = bookLib.findUser(first, last);
+		User user= new User(null, null, null);
+		
+		if(bookLib.findUser(first, last) != null) {
+			
+			user = bookLib.findUser(first, last);
+			System.out.println(user.toString());
+		}else {
+			System.out.println("User not found");
+			return;
+		}
+	
 		address = getResponseTo("Change address");
 		user.setAddress(address);
 
@@ -94,14 +106,17 @@ public class LendingLibraryController {
 		first = getResponseTo("First name");
 
 		bookLib = new LendingLibrary();
-		User user = bookLib.findUser(first, last);
 		
-		if(user == null) {
+		User user= new User(null, null, null);
+		
+		if(bookLib.findUser(first, last) != null) {
+			
+			user = bookLib.findUser(first, last);
+			System.out.println(user.toString());
+		}else {
 			System.out.println("User not found");
+			return;
 		}
-		System.out.println(user.toString());
-		
-
 	}
 
 	/**
@@ -133,7 +148,6 @@ public class LendingLibraryController {
 	 * entry addition should abort if the test fails.
 	 */
 	public void addBook() {
-//		Book book = new Book();
 		String title = "";
 		String author = "";
 		String date = "";
@@ -177,7 +191,6 @@ public class LendingLibraryController {
 	 * should abort if the validation fails.
 	 */
 	public void changeBook() {
-
 		String isbn = "";
 		String title = "";
 		String author = "";
@@ -185,15 +198,31 @@ public class LendingLibraryController {
 
 		System.out.println("Change Book");
 		isbn = getResponseTo("ISBN:");
+		boolean isBadisbn = true; 
 		Book book = new Book("", "", "", "");
-		book = bookLib.findBook(isbn);
+		
+		while(isBadisbn) {
+			if(book.verifyISBNNumber(isbn) == true) {
+				isBadisbn = false;
+			}else if(book.verifyISBNNumber(isbn) == false) {				
+				isbn = getResponseTo("ISBN number (10 digits):");
+			}
+		}		
 
-		title = getResponseTo("Change title:");
-		book.setTitle(title);
-		author = getResponseTo("Change author:");
-		book.setAuthor(author);
-		date = getResponseTo("Change publication date:");
-		book.setPublicationDate(date);
+		if(bookLib.findBook(isbn) != null) {
+			
+			book = bookLib.findBook(isbn);
+			title = getResponseTo("Change title:");
+			book.setTitle(title);
+			author = getResponseTo("Change author:");
+			book.setAuthor(author);
+			date = getResponseTo("Change publication date:");
+			book.setPublicationDate(date);
+		}else {
+	
+		System.out.println("Can't find the book");
+		return;
+		}
 	}
 
 	/**
@@ -201,24 +230,30 @@ public class LendingLibraryController {
 	 * A book is searched by the ISBN number.
 	 */
 	public void findBook() {
-
+		Book book = new Book("", "", "", "");
 		String isbn = "";
-
 		System.out.println("Find Book");
-
 		isbn = getResponseTo("ISBN:");
-
-		bookLib = new LendingLibrary();
-		bookLib.findBook(isbn);
-	
-		Book book = bookLib.findBook(isbn);
-		if(book == null) {
-			System.out.println("Could not find a book with this isbn!");
-			return;
-		}else if (book != null) {
-			System.out.println(book.toString());
+			
+		boolean isBadisbn = true;		
+		while(isBadisbn) {
+			if(book.verifyISBNNumber(isbn) == true) {
+				isBadisbn = false;
+			}else if(book.verifyISBNNumber(isbn) == false) {				
+				isbn = getResponseTo("ISBN number (10 digits):");
+			}
 		}
 
+		bookLib = new LendingLibrary();
+	
+		if(bookLib.findBook(isbn) != null) {
+			book = bookLib.findBook(isbn);
+			System.out.println(book.toString());
+		}else{
+			System.out.println("Could not find a book with this isbn!");
+			return;
+		}
+		
 	}
 
 	public void listBook() {
@@ -244,19 +279,27 @@ public class LendingLibraryController {
 	 * 2 books
 	 */
 	public void addBookLoan() {
-
 		User user = new User("", "", "");
 		Book book = new Book("", "", "", "");
-//		boolean isUserExist;
-//		boolean isBookExist;
 		String firstName = getResponseTo("First name");
 		String lastName = getResponseTo("Last name");
-		String isbn = getResponseTo("ISBN");
+		String isbn = getResponseTo("ISBN");		
+		boolean isBadisbn = true;
+		
+		while(isBadisbn) {
+			if(book.verifyISBNNumber(isbn) == true) {
+				isBadisbn = false;
+			}else if(book.verifyISBNNumber(isbn) == false) {				
+				isbn = getResponseTo("ISBN number (10 digits):");
+			}
+		}
 		 
 		System.out.println("New Loan Entry");
 		
 		user = bookLib.findUser(firstName, lastName);
-		book = bookLib.findBook(isbn);	
+		book = bookLib.findBook(isbn);
+
+		
 		String date = getResponseTo("Loan date (format yyyy-mm-dd)");
 		
 		BookLoan bookLoan = new BookLoan(user, book, date);
@@ -275,33 +318,74 @@ public class LendingLibraryController {
 	 * due date.
 	 */
 	public void changeBookLoan() {
-
+		Book book = new Book("", "", "", "");
+		BookLoan bookLoan;
 		String isbn = "";
 		String date = "";
 		System.out.println("Modify loan details");
 		isbn = getResponseTo("ISBN number for the loan you want to modify:");
-
+		
+		boolean isBadisbn = true;		
+		while(isBadisbn) {
+			if(book.verifyISBNNumber(isbn) == true) {
+				isBadisbn = false;
+			}else if(book.verifyISBNNumber(isbn) == false) {				
+				isbn = getResponseTo("ISBN number (10 digits):");
+			}
+		}
+			
+		bookLib = new LendingLibrary();
+		if(bookLib.findLoan(isbn) != null) {
+			bookLoan = bookLib.findLoan(isbn);
+			System.out.println(bookLoan.toString());
+		}else {
+			System.out.println("Could not find a loan with this ISBN");
+			return;
+		}
+		
 		date = getResponseTo("Change due date(Hit Enter key for no change):");
-		bookLib.findLoan(isbn).setDueDate(date);
-
+		
+		if(date.equals("")) {
+			bookLib.findLoan(isbn).setDueDate(bookLib.findLoan(isbn).getDueDate());
+		}else {
+			bookLib.findLoan(isbn).setDueDate(date);
+		}
+	
 	}
 
 	/**
 	 * A loan can be searched using the ISBN number.
 	 */
-	public void findBookLoan() {
-
+	public void findBookLoan() {		
 		String isbn = "";
-
+		Book book = new Book("", "", "", "");
+		System.out.println("Find Loan");
 		isbn = getResponseTo("Find a book loan. Enter ISBN nubmer");
-
+		
+		boolean isBadisbn = true;		
+		while(isBadisbn) {
+			if(book.verifyISBNNumber(isbn) == true) {
+				isBadisbn = false;
+			}else if(book.verifyISBNNumber(isbn) == false) {				
+				isbn = getResponseTo("ISBN number (10 digits):");
+			}
+		}
+		
 		bookLib = new LendingLibrary();
 		bookLib.findLoan(isbn);
+		
+		BookLoan bookLoan = bookLib.findLoan(isbn);
+		if(bookLoan == null) {
+			System.out.println("Could not find a book with this isbn!");
+			return;
+		}else if (bookLoan != null) {
+			System.out.println(bookLoan.toString());
+		}
+		
 
 	}
 
 	public void listBookLoans() {
-
 		int i = 0;
 		for (BookLoan bookLoan : bookLib.getLoanReg()) {
 			if (bookLoan == null)
@@ -311,7 +395,6 @@ public class LendingLibraryController {
 			i++;
 		}
 		System.out.println("end of the book loan list");
-
 	}
 
 	/**
@@ -324,9 +407,7 @@ public class LendingLibraryController {
 	 * @return
 	 */
 	private String getResponseTo(String msg) {
-
 		System.out.println(msg);
-
 		return input.nextLine();
 	}
 
@@ -336,15 +417,13 @@ public class LendingLibraryController {
  * @param input the user input
  * @return all elements of input is digit, return true.
  */
-	private boolean isValidNumber(String input) {
-		
+	private boolean isValidNumber(String input) {		
 		for(int i = 0 ; i < input.length(); i++ ) {
 			if(!Character.isDigit(input.charAt(i))) {
 				return false;
 			}
 		}
-			return true;
-			
+			return true;			
 	}
 
 }
