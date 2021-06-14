@@ -1,9 +1,13 @@
+import java.util.regex.Pattern;
 
 /**
  * 
- * Class Name: CST8284-300 Author Name: Ming Wang Class Name: Assignment 1
- * Date:Jun 4, 2021 Description: Class Book with title, author ,publicationdate,
- * isbnnumber
+ * Class Name: CST8284-300 
+ * Author Name: Ming Wang 
+ * Class Name: Assignment 1
+ * Date:Jun 4, 2021 
+ * Description: Class Book with title, author ,publicationdate, isbnnumber
+ * 
  */
 public class Book {
 
@@ -40,10 +44,13 @@ public class Book {
 	}
 
 	public void setPublicationDate(String publicationDate) {
+		
+		
 		this.publicationDate = publicationDate;
 	}
 
 	public String getIsbnNumber() {
+		
 		return isbnNumber;
 	}
 
@@ -52,21 +59,21 @@ public class Book {
 	}
 
 	/**
-	 * verifyISBNNumber method is used to verify the isbn number
-	 * Ensures that the string is exactly 10 digits long.
+	 * verifyISBNNumber method is used to verify the isbn number Ensures that the
+	 * string is exactly 10 digits long.
+	 * 
 	 * @param s the isbn input by user
 	 * @return
 	 */
 
 	public boolean verifyISBNNumber(String s) {
-		boolean isBadisbn = true; 
-	
-			if(s.length() == 10) {				
-				isBadisbn = false;
-				return true;
-			}			
-		
-		return false;		
+		boolean isBadisbn = true;
+		Pattern pattern = Pattern.compile("[0-9]*");
+		if ((s.length() == 10) && (pattern.matcher(s).matches())) {
+			isBadisbn = false;
+			return true;
+		}
+		return false;
 	}
 
 	@Override

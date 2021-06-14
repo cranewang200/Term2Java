@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotNull;
  * Class Name: CST8284-300 
  * Author Name: Ming Wang 
  * Class Name: Assignment 1
- * Date:May 31, 2021
+ * Date:Jun 14, 2021
  * 
  * This class contains the implementation of all the methods that do the work of
  * prompting the user and accepting the inputs. Once the data is validated, it
@@ -104,9 +104,16 @@ public class LendingLibrary {
 		LendingLibrary.setLastBookIndex(index);
 		index = LendingLibrary.getLastBookIndex();
 
-		if (index > MAX_BOOK_NUMBER - 1) { // if the bookReg array to reaching the maxmum size , 10
-			index = MAX_BOOK_NUMBER - 1;
-			return false;
+//		if (index > MAX_BOOK_NUMBER - 1) { // if the bookReg array to reaching the maxmum size , 10
+//			index = MAX_BOOK_NUMBER - 1;
+//			return false;
+//		}
+		
+		for (Book book : bookReg) {
+			if( book == null) break;
+			if(book.getIsbnNumber().equals(b.getIsbnNumber())) {
+				return false;
+			}
 		}
 
 		bookReg[index] = b; // store the new book to the last position of bookReg array
@@ -128,23 +135,23 @@ public class LendingLibrary {
 		LendingLibrary.setLastLoanIndex(index); // find the last index of the loan
 		index = LendingLibrary.getLastLoanIndex(); // get the last index of the loan
 
-		if (index > MAX_LOAN_NUMBER - 1) { // if the array of the loan reach the maximum length
-			index = MAX_LOAN_NUMBER - 1; // set the index to the last index of the loan array.
-			return false; // to prevent the program crush.
-		}
+//		if (index > MAX_LOAN_NUMBER - 1) { // if the array of the loan reach the maximum length
+//			index = MAX_LOAN_NUMBER - 1; // set the index to the last index of the loan array.
+//			return false; // to prevent the program crush.
+//		}
 
 		if (!userCanBorrow(l.getUser())) {
 			return false;
-
-		} else if (isBookLoaned(l.getBook())) {
+		}
+		if (isBookLoaned(l.getBook())) {
 			return false;
 		}
 				
-		if ((userCanBorrow(l.getUser())) || isBookLoaned(l.getBook())) {
+//		if ((userCanBorrow(l.getUser())) && isBookLoaned(l.getBook())) {
 			loanReg[index] = l;
 			loanReg[index].setBook(l.getBook()); // set the finding book object to bookLoan
 			loanReg[index].setUser(l.getUser()); // set the finding user object to bookLoan
-		}		
+//		}		
 		return true;
 	}
 
@@ -160,7 +167,7 @@ public class LendingLibrary {
 		User user1 = new User(null, null, null);
 		for (User user : userReg) {
 			if(user == null) break;
-			if ((firstName.equals(user.getFirstName())) || (lastName.equals(user.getLastName()))) {
+			if ((firstName.equals(user.getFirstName())) && (lastName.equals(user.getLastName()))) {
 				index = count;
 				break;
 			}
