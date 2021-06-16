@@ -1,7 +1,6 @@
 import java.util.Scanner;
 import java.util.regex.Pattern;  //to verify the input is digital number
 
-
 /**
  * 
  * Class Name: CST8284-300
@@ -13,10 +12,10 @@ import java.util.regex.Pattern;  //to verify the input is digital number
  */
 
 /**
- * this class include 4 methods (add, change, find ,and list method)for each book, user, and loan. 
- * 
- *
- *
+ * this class include 4 methods (add, change, find ,and list method)for 
+ * each book, user, and loan object. 
+ * also it has isValidNumber and getResponseTo method to interactive with user
+ * and to veryfy the isbn number is legal.
  */
 public class LendingLibraryController {
 
@@ -161,7 +160,7 @@ public class LendingLibraryController {
 		title = getResponseTo("Title:");
 		author = getResponseTo("Author:");
 		date = getResponseTo("Publication date (year in NNNN format)");
-// to verify the data is 4 digit
+		// to verify the data is 4 digit
 		Pattern pattern = Pattern.compile("[0-9]*");
 		boolean isBadDate = true;
 		while(isBadDate) {
@@ -172,10 +171,8 @@ public class LendingLibraryController {
 				date = getResponseTo("Publication date (year in NNNN format)");
 			}			
 		}
-// to verify the isbn is 10 digit	
+		// to verify the isbn is 10 digit	
 		isbn = getResponseTo("ISBN number (10 digits):");
-		
-		
 		while(isBadisbn) {
 			if(book.verifyISBNNumber(isbn) == true) {
 		
@@ -184,7 +181,7 @@ public class LendingLibraryController {
 				isbn = getResponseTo("ISBN number (10 digits):");
 			}
 		}
-			
+		//end of verification
 		bookLib = new LendingLibrary();
 		book.setAuthor(author);
 		book.setIsbnNumber(isbn);
@@ -219,7 +216,7 @@ public class LendingLibraryController {
 		isbn = getResponseTo("ISBN:");
 		boolean isBadisbn = true; 
 		Book book = new Book("", "", "", "");
-		
+		// to verify the isbn number		
 		while(isBadisbn) {
 			if(book.verifyISBNNumber(isbn) == true) {
 				isBadisbn = false;
@@ -236,7 +233,8 @@ public class LendingLibraryController {
 			author = getResponseTo("Change author:");
 			book.setAuthor(author);
 			date = getResponseTo("Change publication date:");
-//	verify the date input is 4 digit		
+			
+			// to verify the date input is 4 digit		
 			Pattern pattern = Pattern.compile("[0-9]*");
 			boolean isBadDate = true;
 			while(isBadDate) {
@@ -247,7 +245,7 @@ public class LendingLibraryController {
 					date = getResponseTo("Publication date (year in NNNN format)");
 				}			
 			}
-//			
+			//	end of verification		
 			book.setPublicationDate(date);
 		}else {
 	
@@ -286,11 +284,11 @@ public class LendingLibraryController {
 		}
 		
 	}
-
+	/**
+	 * listBook method is used to output all the books in the bookReg array
+	 */
 	public void listBook() {
-
 		int i = 0;
-
 		for (Book book : bookLib.getBookReg()) {
 			if (book == null)
 				break;
@@ -304,6 +302,10 @@ public class LendingLibraryController {
 	}
 
 	/**
+	 * addBookLoan method is used to create a new loan , after the verification
+	 * it will pass the information of the loan to LendingLibrary. addBookLoan
+	 * method. to add the new loan object to the book loan array.
+	 * 
 	 * The book’s ISBN number, the user’s first and last names are required to
 	 * create a book loan. The entry will fail if: ● The ISBN number is invalid ●
 	 * The user does not exist ● The book is already loaned ● The user has borrowed
@@ -317,7 +319,7 @@ public class LendingLibraryController {
 		String lastName = getResponseTo("Last name");
 		String isbn = getResponseTo("ISBN");		
 		boolean isBadisbn = true;
-		
+		//verify the isbn number
 		while(isBadisbn) {
 			if(book.verifyISBNNumber(isbn) == true) {
 				isBadisbn = false;
@@ -327,13 +329,11 @@ public class LendingLibraryController {
 		}
 		 book.setIsbnNumber(isbn);
 		
-		
 		user = bookLib.findUser(firstName, lastName);
 		book = bookLib.findBook(isbn);
-
 		
 		String date = getResponseTo("Loan date (format yyyy-mm-dd)");
-//verify the date is 4 digits		
+		//verify the date is 4 digits		
 		Pattern pattern = Pattern.compile("[0-9]*");
 		boolean isBadDate = true;
 		while(isBadDate) {
@@ -357,8 +357,8 @@ public class LendingLibraryController {
 	}
 
 	/**
-	 * A loan can be modified using the ISBN number. The only change allowed is the
-	 * due date.
+	 * changeBookLoan method is used to change the loan's due date
+	 * A loan can be modified using the ISBN number. 
 	 */
 	public void changeBookLoan() {
 		Book book = new Book("", "", "", "");
@@ -375,8 +375,7 @@ public class LendingLibraryController {
 			}else if(book.verifyISBNNumber(isbn) == false) {				
 				isbn = getResponseTo("ISBN number (10 digits):");
 			}
-		}
-			
+		}			
 		
 		bookLib = new LendingLibrary();
 		if(bookLib.findLoan(isbn) != null) {
@@ -398,6 +397,8 @@ public class LendingLibraryController {
 	}
 
 	/**
+	 * findBookLoan method is used to find a loan in the loan array
+	 * and output the found information to the console.
 	 * A loan can be searched using the ISBN number.
 	 */
 	public void findBookLoan() {		
@@ -428,7 +429,9 @@ public class LendingLibraryController {
 		
 
 	}
-
+	/**
+	 * listBookLoans method is used to output all the loans in the loan array
+	 */
 	public void listBookLoans() {
 		int i = 0;
 		for (BookLoan bookLoan : bookLib.getLoanReg()) {
@@ -442,14 +445,16 @@ public class LendingLibraryController {
 	}
 
 	/**
-	 * A helper method that prints out the String as a parameter, and then scans the
+	 * 
+	 * getResponseTo is a helper method that interactive with user, and then scans the
 	 * input and returns the user’s response as a String. The purpose of the method
 	 * is to make the code cleaner and improve code readability.We make it private
 	 * as there is no need for external use.
 	 * 
-	 * @param input
-	 * @return
+	 * @param msg  the message passed from other method
+	 * @return scanner wating for user input
 	 */
+	
 	private String getResponseTo(String msg) {
 		System.out.println(msg);
 		return input.nextLine();
@@ -457,6 +462,7 @@ public class LendingLibraryController {
 
 	
 /**
+ * isValidNumber is used to verify the isbn number if it's number
  * if the input include any non-digit element. return flase
  * @param input the user input
  * @return all elements of input is digit, return true.

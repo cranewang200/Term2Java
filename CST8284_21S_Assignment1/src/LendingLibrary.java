@@ -1,25 +1,24 @@
-import static org.junit.Assert.assertNotNull;
-
 /**
  * 
  * Class Name: CST8284-300 
  * Author Name: Ming Wang 
  * Class Name: Assignment 1
  * Date:Jun 14, 2021
- * 
- * This class contains the implementation of all the methods that do the work of
+ * Description: This class contains the implementation of all the methods that do the work of
  * prompting the user and accepting the inputs. Once the data is validated, it
  * is saved or retrieved from the LendingLibrary object as appropriate. This
  * class contains a LendingLibrary object to access or store the items in the
  * LendingLibrary. Each public method in this class corresponds to one choice
  * from the user menu. Each method will present a menu similar to the one shown
- * in the sample output and process the input to perform the required action :
- * create/modify/find/list a User/Book/BookLoan. The LendingLibraryController
- * uses the bookLib object to access the LendingLibrary object to
- * add/modify/find/list User/Book/BookLoan objects.
- * 
- * The add/find methods process the addition and searching of items in the
- * corresponding arrays.
+ * in the sample output and process the input to perform the required action
+ *
+ */
+
+/**
+ * This class includes addUser, addBook, addLoan, findUser, findBook, findLoan, 
+ * userCanBorrow, isBookLoaned methods. and its getters and setters. and a defalut
+ * constructor. 
+ * This class is used to operate the objects in the array.
  *
  */
 public class LendingLibrary {
@@ -79,11 +78,6 @@ public class LendingLibrary {
 		LendingLibrary.setLastUserIndex(index);
 		index = LendingLibrary.getLastUserIndex();
 
-//		if (index >= MAX_USER_NUMBER ) {
-//			index = MAX_USER_NUMBER -1;
-//			return false;
-//		}
-
 		userReg[index] = u;
 		userReg[index].setId(userReg[index].getId() + index);
 		return true;
@@ -103,12 +97,7 @@ public class LendingLibrary {
 		int index = Integer.MIN_VALUE;
 		LendingLibrary.setLastBookIndex(index);
 		index = LendingLibrary.getLastBookIndex();
-
-//		if (index > MAX_BOOK_NUMBER - 1) { // if the bookReg array to reaching the maxmum size , 10
-//			index = MAX_BOOK_NUMBER - 1;
-//			return false;
-//		}
-		
+		// to verify that the isbn of two books can not be same
 		for (Book book : bookReg) {
 			if( book == null) break;
 			if(book.getIsbnNumber().equals(b.getIsbnNumber())) {
@@ -135,23 +124,17 @@ public class LendingLibrary {
 		LendingLibrary.setLastLoanIndex(index); // find the last index of the loan
 		index = LendingLibrary.getLastLoanIndex(); // get the last index of the loan
 
-//		if (index > MAX_LOAN_NUMBER - 1) { // if the array of the loan reach the maximum length
-//			index = MAX_LOAN_NUMBER - 1; // set the index to the last index of the loan array.
-//			return false; // to prevent the program crush.
-//		}
-
 		if (!userCanBorrow(l.getUser())) {
 			return false;
 		}
 		if (isBookLoaned(l.getBook())) {
 			return false;
 		}
-				
-//		if ((userCanBorrow(l.getUser())) && isBookLoaned(l.getBook())) {
-			loanReg[index] = l;
-			loanReg[index].setBook(l.getBook()); // set the finding book object to bookLoan
-			loanReg[index].setUser(l.getUser()); // set the finding user object to bookLoan
-//		}		
+			
+		loanReg[index] = l;
+		loanReg[index].setBook(l.getBook()); // set the finding book object to bookLoan
+		loanReg[index].setUser(l.getUser()); // set the finding user object to bookLoan
+	
 		return true;
 	}
 
@@ -167,7 +150,7 @@ public class LendingLibrary {
 		User user1 = new User(null, null, null);
 		for (User user : userReg) {
 			if(user == null) break;
-			if ((firstName.equals(user.getFirstName())) && (lastName.equals(user.getLastName()))) {
+			if ((firstName.toLowerCase().equals(user.getFirstName().toLowerCase())) && (lastName.toLowerCase().equals(user.getLastName().toLowerCase()))) {
 				index = count;
 				break;
 			}
@@ -330,7 +313,7 @@ public class LendingLibrary {
 	}
 
 	/**
-	 * mutator of lastBookIndex
+	 * mutator of lastBookIndex to find the next vacant space in the book array
 	 * @param lastBookIndex the last vacant space index of the book array
 	 */
 	public static void setLastBookIndex(int lastBookIndex) {
@@ -362,7 +345,7 @@ public class LendingLibrary {
 	}
 
 	/**
-	 * mutator of lastUserIndex
+	 * mutator of lastUserIndex, to find the next vacant space in the user array
 	 * @param lastUserIndex last vacant space in the user array
 	 */
 	public static void setLastUserIndex(int lastUserIndex) {
@@ -395,7 +378,7 @@ public class LendingLibrary {
 
 	
 	/**
-	 * mutator of the lastLoanIndex
+	 * mutator of the lastLoanIndex. to find the next vacant space in the loan array
 	 * @param lastLoanIndex lastUserIndex last vacant space in the loan array
 	 */
 	public static void setLastLoanIndex(int lastLoanIndex) {

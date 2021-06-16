@@ -3,13 +3,20 @@ import java.util.Scanner;
 
 /**
  * 
- * Class Name: CST8284-300 Author Name: Ming Wang Class Name: Assignment 1
- * Date:May 31, 2021 Description:This class contains the main loop of the
+ * Class Name: CST8284-300 
+ * Author Name: Ming Wang 
+ * Class Name: Assignment 1
+ * Date:May 31, 2021 
+ * Description:This class contains the main loop of the
  * application to accept and process the user choices. It verifies the user’s
  * input and based on the selection, the relevant method to execute is called.
  *
  */
 
+/**
+ * this class include the startApp,displayAppMenu, and executeMenuItem method 
+ * to interactive with user and execute the program. 
+ */
 public class AppDriver {
 	private static final int APP_EXIT = 0;
 	private static final int APP_ADD_BOOK = 1;
@@ -29,11 +36,9 @@ public class AppDriver {
 	public LendingLibraryController appController = new LendingLibraryController();
 
 	/**
-	 * startApp() Is the method that is called by the AppLauncher It calls
-	 * displayAppMenu() to display the menu to the user. As the user makes the
-	 * selection, the choice is returned to be used by the executeMenuItem(). The
-	 * two methods need to be in a loop that will be exited when the user selects
-	 * APP_EXIT.
+	 * this method is used to call the displayAppMenu method 
+	 * and executeMenuItem method to output the menu
+	 * and execute the program.
 	 */
 	public void startApp() {
 
@@ -54,9 +59,10 @@ public class AppDriver {
 	}
 
 	/**
+	 * displayAppMenu is a method to output the menu to the console.
 	 * Shows on the console the menu items that the user can choose from.
-	 * 
-	 * @return menu option
+	 * and pass the user input to the executeMenuItem to execute the program
+	 * @return a integer number for menu option
 	 */
 	private int displayAppMenu() {
 		int inputOption = -1;
@@ -86,7 +92,6 @@ public class AppDriver {
 				System.out.println("Please input a Integer");
 				input.nextLine();
 			}
-
 		}
 		input.nextLine(); // clean up the input stream
 		return inputOption;
@@ -94,6 +99,8 @@ public class AppDriver {
 
 	/**
 	 * 
+	 * executeMenuItem is a method to execute the program by user input
+	 * when user input 0 .the program exits
 	 * Based on the menu item chosen, it executes the action requested by the user.
 	 * The AppDriver uses the appCtrl reference to call the corresponding method in
 	 * LendingLibraryController
