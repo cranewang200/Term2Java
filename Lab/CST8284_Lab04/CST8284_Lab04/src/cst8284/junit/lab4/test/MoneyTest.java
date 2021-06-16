@@ -18,12 +18,14 @@ public class MoneyTest {
     private Money money;
 	private static final BigDecimal DIFFERENT_PRICE = new BigDecimal("1337");
 
+	//construct the new object before testing
     @Before
     public void initMoney() throws Exception {
         currency = new Currency("USD");
         money = new Money(PRICE, currency);
     }
 
+    //test the accessor of the price
     @Test
     public void testGetPrice_True() {
     	
@@ -34,6 +36,7 @@ public class MoneyTest {
 
     }
     
+    //test the accessor of the price
     @Test
     public void testGetPrice_False() {
     	
@@ -43,6 +46,7 @@ public class MoneyTest {
     	
     }
 
+    //test the accessor of the currency
     @Test
     public void testGetCurrency_True() {
     	
@@ -52,16 +56,16 @@ public class MoneyTest {
     	
 
     }
-
+    //test the accessor of the currency
     @Test
     public void testGetCurrency_False() {
     	Currency result = money.getCurrency();
     	
     	assertFalse(!result.equals(currency));
-    	
-
     }
     
+    
+    //test the equals method with same price and currency
     @Test
     public void testEquals_WhenEquals() {
         Money secondMoney = new Money(PRICE, currency);
@@ -70,6 +74,7 @@ public class MoneyTest {
         //test when two money object has the same price and currency, then they are equals
     }
 
+    //test the equals method with different price and currency
     @Test
     public void testEquals_WhenNotEquals() {
 
@@ -83,10 +88,9 @@ public class MoneyTest {
 
     }
 
+    //test the hashCode method with same price and currency
     @Test
-    public void testHashCode_Equal() {
-    	
-
+    public void testHashCode_Equal() {    	
     	Money secondMoney = new Money(PRICE, currency);
     	
     	assertTrue(money.hashCode() == secondMoney.hashCode());
@@ -97,6 +101,7 @@ public class MoneyTest {
 
     }
     
+  //test the hashCode method with different price and currency
     @Test
     public void testHashCode_NotEqual() {
     	
@@ -106,6 +111,7 @@ public class MoneyTest {
 
     }
     
+   //test the hashCode method
     @Test
     public void testHashCode() {
     	    	

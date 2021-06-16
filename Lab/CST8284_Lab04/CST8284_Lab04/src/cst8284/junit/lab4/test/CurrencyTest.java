@@ -18,11 +18,13 @@ public class CurrencyTest {
     private static final String DIFFERENT_MONEY_CODE = "CAD";
     private Currency currency;
 
+	//construct the new object before testing
     @Before
     public void initCurrency() {
         currency = new Currency(MONEY_CODE);      
     }
-    
+   
+    //test the accessor of abbreviation with same money code
     @Test
     public void testGetAbbreviation_True() {
            
@@ -31,7 +33,7 @@ public class CurrencyTest {
         assertEquals(MONEY_CODE, result);
     }
 
- 
+   //test the accessor of abbreviation with different money code
     @Test
     public void testGetAbbreviation_False() {
         String result = currency.getAbbreviation();
@@ -39,6 +41,7 @@ public class CurrencyTest {
         assertFalse(DIFFERENT_MONEY_CODE.equals(result));
     }
     
+    //test the equals method with same money code
     @Test
     public void testEquals_WhenEquals() {
         Currency secondCurrency = new Currency(MONEY_CODE);
@@ -48,6 +51,7 @@ public class CurrencyTest {
         
     }
 
+    //test the equals method with different money code
     @Test
     public void testEquals_WhenNotEquals() {
         Currency secondCurrency = new Currency(DIFFERENT_MONEY_CODE);
@@ -58,6 +62,7 @@ public class CurrencyTest {
         
     }
 
+    //test the hashcode method with same money code
     @Test
     public void testHashCode_True() {
         Currency secondCurrency = new Currency(MONEY_CODE);
@@ -68,6 +73,7 @@ public class CurrencyTest {
         assertEquals(firstHash, secondHash);
     }
     
+    //test the hashcode method with different money code
     @Test
     public void testHashCode_False() {
         Currency secondCurrency = new Currency(DIFFERENT_MONEY_CODE);
