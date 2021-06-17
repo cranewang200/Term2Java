@@ -229,7 +229,7 @@ public class LendingLibrary {
 			}
 		}
 		if (count >= MAX_LOAN_PER_USER) {
-			System.out.println("User already load 2 book, Can not loan more");
+			
 			return false; // user can not borrow
 		} else {
 			return true; // user can borrow

@@ -43,7 +43,7 @@ public class LendingLibraryController {
 		address = getResponseTo("User address");
 		String age1 = getResponseTo("Age");
 		boolean isBadInput = true;
-		
+		//to verify if the age is lesser than 18
 		while(isBadInput) {			
 			if (isValidNumber(age1) == true) {
 				age = Integer.parseInt(age1);
@@ -82,14 +82,15 @@ public class LendingLibraryController {
 		first = getResponseTo("First name");
 		bookLib = new LendingLibrary();
 		User user= new User(null, null, null);
-		
+		// to verify the if the user exist
 		if(bookLib.findUser(first, last) != null) {			
 			user = bookLib.findUser(first, last);
 			System.out.println(user.toString());
 		}else {
 			System.out.println("User not found");
 			return;
-		}	
+		}
+		//user exist, then change address
 		address = getResponseTo("Change address");
 		user.setAddress(address);
 	}
@@ -109,7 +110,7 @@ public class LendingLibraryController {
 
 		bookLib = new LendingLibrary();		
 		User user= new User(null, null, null);
-		
+		//to look for the user by first name and last name
 		if(bookLib.findUser(first, last) != null) {
 			
 			user = bookLib.findUser(first, last);
@@ -126,6 +127,7 @@ public class LendingLibraryController {
 	 */
 	public void listUser() {
 		int i = 0;
+		if(bookLib == null) return; //if the bookLib object is null then return, in case program crash
 		for (User user : bookLib.getUserReg()) {
 
 			if (user == null)
@@ -160,22 +162,20 @@ public class LendingLibraryController {
 		title = getResponseTo("Title:");
 		author = getResponseTo("Author:");
 		date = getResponseTo("Publication date (year in NNNN format)");
-		// to verify the data is 4 digit
+		// to verify the data is 4 digits
 		Pattern pattern = Pattern.compile("[0-9]*");
 		boolean isBadDate = true;
 		while(isBadDate) {
-			if((date.length() == 4) && pattern.matcher(date).matches()) {
-				
+			if((date.length() == 4) && pattern.matcher(date).matches()) {				
 				isBadDate = false;
 			}else {
 				date = getResponseTo("Publication date (year in NNNN format)");
 			}			
 		}
-		// to verify the isbn is 10 digit	
+		// to verify the isbn is 10 digits	
 		isbn = getResponseTo("ISBN number (10 digits):");
 		while(isBadisbn) {
-			if(book.verifyISBNNumber(isbn) == true) {
-		
+			if(book.verifyISBNNumber(isbn) == true) {		
 				isBadisbn = false;
 			}else if(book.verifyISBNNumber(isbn) == false) {				
 				isbn = getResponseTo("ISBN number (10 digits):");
@@ -216,7 +216,7 @@ public class LendingLibraryController {
 		isbn = getResponseTo("ISBN:");
 		boolean isBadisbn = true; 
 		Book book = new Book("", "", "", "");
-		// to verify the isbn number		
+		// to verify the isbn number user want to search		
 		while(isBadisbn) {
 			if(book.verifyISBNNumber(isbn) == true) {
 				isBadisbn = false;
@@ -224,9 +224,8 @@ public class LendingLibraryController {
 				isbn = getResponseTo("ISBN number (10 digits):");
 			}
 		}		
-
-		if(bookLib.findBook(isbn) != null) {
-			
+		//to verify if book exists, then change the information of book
+		if(bookLib.findBook(isbn) != null) {	// found book exists, change the information		
 			book = bookLib.findBook(isbn);
 			title = getResponseTo("Change title:");
 			book.setTitle(title);
@@ -234,7 +233,7 @@ public class LendingLibraryController {
 			book.setAuthor(author);
 			date = getResponseTo("Change publication date:");
 			
-			// to verify the date input is 4 digit		
+			// to verify the date input is 4 digits		
 			Pattern pattern = Pattern.compile("[0-9]*");
 			boolean isBadDate = true;
 			while(isBadDate) {
@@ -247,8 +246,7 @@ public class LendingLibraryController {
 			}
 			//	end of verification		
 			book.setPublicationDate(date);
-		}else {
-	
+		}else {	//book not found, renturn
 		System.out.println("Can't find the book");
 		return;
 		}
@@ -288,8 +286,10 @@ public class LendingLibraryController {
 	 * listBook method is used to output all the books in the bookReg array
 	 */
 	public void listBook() {
-		int i = 0;
+		int i = 0;		
+		if(bookLib == null) return; //if the bookLib object is null then return, in case program crash
 		for (Book book : bookLib.getBookReg()) {
+			
 			if (book == null)
 				break;
 			System.out.printf("Book #%d\n", i + 1);
@@ -332,6 +332,11 @@ public class LendingLibraryController {
 		user = bookLib.findUser(firstName, lastName);
 		book = bookLib.findBook(isbn);
 		
+		if(user == null || book == null) {
+			System.out.println("Book or User not found, Add loan failed");
+			return ;
+		}else {
+		
 		String date = getResponseTo("Loan date (format yyyy-mm-dd)");
 		//verify the date is 4 digits		
 		Pattern pattern = Pattern.compile("[0-9]*");
@@ -352,6 +357,7 @@ public class LendingLibraryController {
 			System.out.println("Loan added");
 		}else if (isAdded == false) {
 			System.out.println("Loan add failed!!");
+		}
 		}
 
 	}
@@ -434,6 +440,7 @@ public class LendingLibraryController {
 	 */
 	public void listBookLoans() {
 		int i = 0;
+		if(bookLib == null) return;//if the bookLib object is null then return, in case program crash
 		for (BookLoan bookLoan : bookLib.getLoanReg()) {
 			if (bookLoan == null)
 				break;
