@@ -27,26 +27,26 @@ import cst8284.Assignment2.User;
 
 public class UserTest {
 	
-	private final String DEFAULT_FIRST = "Mike";
-	private final String DEFAULT_LAST = "Jodan";
-	private final String DEFAULT_ADDRESS = "1234 Ottawa street";
-	private final int DEFAULT_AGE = 22;
-	private final int DEFAULT_ID = 1000;
+	private final static String DEFAULT_FIRST = "Mike";
+	private final static String DEFAULT_LAST = "Jodan";
+	private final static String DEFAULT_ADDRESS = "1234 Ottawa street";
+	private final static int DEFAULT_AGE = 22;
+	private final static int DEFAULT_ID = 1000;
 	
-	private final String OTHER_FIRST = "Harry";
-	private final String OTHER_LAST = "Porter";
-	private final String OTHER_ADDRESS = "5678 Toronto street";
-	private final int OTHER_AGE = 55;
-	private final int OTHER_ID = 2000;
+	private final static String OTHER_FIRST = "Harry";
+	private final static String OTHER_LAST = "Porter";
+	private final static String OTHER_ADDRESS = "5678 Toronto street";
+	private final static int OTHER_AGE = 55;
+	private final static int OTHER_ID = 2000;
 	
-	User user1 ;
-	User user2 ;
+	static User user1 ;
+	static User user2 ;
 	User user3;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-//		user1 = new User(DEFAULT_ID, DEFAULT_FIRST, DEFAULT_LAST, DEFAULT_ADDRESS, DEFAULT_AGE);
-//		user2 = new User(OTHER_ID, OTHER_FIRST, OTHER_LAST, OTHER_ADDRESS, OTHER_AGE);
+		user1 = new User(DEFAULT_ID, DEFAULT_FIRST, DEFAULT_LAST, DEFAULT_ADDRESS, DEFAULT_AGE);
+		user2 = new User(OTHER_ID, OTHER_FIRST, OTHER_LAST, OTHER_ADDRESS, OTHER_AGE);
 	}
 
 	@AfterClass
@@ -56,8 +56,8 @@ public class UserTest {
 	@Before
 	public void setUp() throws Exception {
 
-		user1 = new User(DEFAULT_ID, DEFAULT_FIRST, DEFAULT_LAST, DEFAULT_ADDRESS, DEFAULT_AGE);
-		user2 = new User(OTHER_ID, OTHER_FIRST, OTHER_LAST, OTHER_ADDRESS, OTHER_AGE);
+//		user1 = new User(DEFAULT_ID, DEFAULT_FIRST, DEFAULT_LAST, DEFAULT_ADDRESS, DEFAULT_AGE);
+//		user2 = new User(OTHER_ID, OTHER_FIRST, OTHER_LAST, OTHER_ADDRESS, OTHER_AGE);
 	}
 
 	@After
@@ -208,11 +208,11 @@ public class UserTest {
 		assertNotEquals(user1, user2);
 	}
 
-//	@Test
-//	public void testGetUserNextId_True() {
-//		int nextId = user1.getUserNextId();
-//		assertTrue(nextId == DEFAULT_ID + 1 );
-//	}
+	@Test
+	public void testGetUserNextId_True() {
+		int nextId = User.getUserNextId();
+		assertTrue(nextId == DEFAULT_ID + 1 );
+	}
 //	
 //	@Test
 //	public void testGetUserNextId_False() {
