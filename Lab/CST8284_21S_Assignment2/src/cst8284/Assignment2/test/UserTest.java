@@ -16,7 +16,7 @@ import cst8284.Assignment2.User;
  * Author Name: Ming Wang
  * Class Name: Assignment 2
  * Date:Jul 10, 2021
- * Description: jUnit test for User class. Includes 30 test methods.
+ * Description: jUnit test for User class. Includes 32 test methods.
  *
  */
 
@@ -25,28 +25,29 @@ import cst8284.Assignment2.User;
  * For this testing class, instance 3 User objects for testing.
  */
 
-public class UserTest {
-	
-	private final static String DEFAULT_FIRST = "Mike";
-	private final static String DEFAULT_LAST = "Jodan";
-	private final static String DEFAULT_ADDRESS = "1234 Ottawa street";
-	private final static int DEFAULT_AGE = 22;
-	private final static int DEFAULT_ID = 1000;
-	
-	private final static String OTHER_FIRST = "Harry";
-	private final static String OTHER_LAST = "Porter";
-	private final static String OTHER_ADDRESS = "5678 Toronto street";
-	private final static int OTHER_AGE = 55;
-	private final static int OTHER_ID = 2000;
-	
-	static User user1 ;
-	static User user2 ;
-	User user3;
 
+public class UserTest {
+
+
+	private final String DEFAULT_FIRST = "Mike";
+	private final String DEFAULT_LAST = "Jodan";
+	private final String DEFAULT_ADDRESS = "1234 Ottawa street";
+	private final int DEFAULT_AGE = 22;
+	private final int DEFAULT_ID = 1000;
+	
+	private final String OTHER_FIRST = "Harry";
+	private final String OTHER_LAST = "Porter";
+	private final String OTHER_ADDRESS = "5678 Toronto street";
+	private final int OTHER_AGE = 55;
+	private final int OTHER_ID = 2000;
+	
+	User user1 ;
+	User user2 ;
+	User user3;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		user1 = new User(DEFAULT_ID, DEFAULT_FIRST, DEFAULT_LAST, DEFAULT_ADDRESS, DEFAULT_AGE);
-		user2 = new User(OTHER_ID, OTHER_FIRST, OTHER_LAST, OTHER_ADDRESS, OTHER_AGE);
+		
 	}
 
 	@AfterClass
@@ -56,8 +57,8 @@ public class UserTest {
 	@Before
 	public void setUp() throws Exception {
 
-//		user1 = new User(DEFAULT_ID, DEFAULT_FIRST, DEFAULT_LAST, DEFAULT_ADDRESS, DEFAULT_AGE);
-//		user2 = new User(OTHER_ID, OTHER_FIRST, OTHER_LAST, OTHER_ADDRESS, OTHER_AGE);
+		user1 = new User(DEFAULT_ID, DEFAULT_FIRST, DEFAULT_LAST, DEFAULT_ADDRESS, DEFAULT_AGE);
+		user2 = new User(OTHER_ID, OTHER_FIRST, OTHER_LAST, OTHER_ADDRESS, OTHER_AGE);
 	}
 
 	@After
@@ -75,7 +76,7 @@ public class UserTest {
 		String address = user1.getAddress();
 		int age = user1.getAge();
 		
-		assertTrue(id == DEFAULT_ID 
+		assertTrue(id == DEFAULT_ID
 				&& first.equals(DEFAULT_FIRST) 
 				&& last.equals(DEFAULT_LAST)
 				&& address.equals(DEFAULT_ADDRESS)
@@ -182,13 +183,13 @@ public class UserTest {
 	 */
 	@Test
 	public void testToString_False() {
-		String expect = "";
-		expect = "************ User id:" + user1.getId() + "\n";
-		expect += "************ User name:" + user1.getFirstName() + " " + user1.getLastName() + "\n";
-		expect += "************ Age:" + user1.getAge() + "\n";
-		expect += "************ Address:" + user1.getAddress() + "\n";
+		String result = "";
+		result = "\n*********User id: " + user1.getId();
+		result += "\n*********User name: " + user1.getFirstName() + " " + user1.getLastName();
+		result += "\n*********Age: " + user1.getAge();
+		result += "\n*********Address: " + user1.getAddress();
 		
-		assertNotEquals(expect, user2.toString());
+		assertNotEquals(result, user2.toString());
 	}
 
 	/**
@@ -210,24 +211,16 @@ public class UserTest {
 
 	@Test
 	public void testGetUserNextId_True() {
-		int nextId = User.getUserNextId();
-		assertTrue(nextId == DEFAULT_ID + 1 );
+		int result = User.getUserNextId();
+		assertTrue(result == DEFAULT_ID + 1);
 	}
-//	
-//	@Test
-//	public void testGetUserNextId_False() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetUserNextId_True() {
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testSetUserNextId_False() {
-//		fail("Not yet implemented");
-//	}
+
+	@Test
+	public void testGetUserNextId_False() {
+		int result = User.getUserNextId();
+		assertFalse(result == OTHER_ID);
+	}
+	
 
 	/**
 	 * Test the getId method
@@ -289,7 +282,7 @@ public class UserTest {
 	@Test
 	public void testSetFirstName_True() {
 		user1.setFirstName(DEFAULT_FIRST);
-		assertTrue(user1.getFirstName() == DEFAULT_FIRST);
+		assertTrue(user1.getFirstName().equals(DEFAULT_FIRST));
 	}
 
 	/**
@@ -298,7 +291,7 @@ public class UserTest {
 	@Test
 	public void testSetFirstName_False() {
 		user1.setFirstName(DEFAULT_FIRST);
-		assertFalse(user1.getFirstName() == OTHER_FIRST);
+		assertFalse(user1.getFirstName().equals(OTHER_FIRST));
 	}
 
 	/**
@@ -325,7 +318,7 @@ public class UserTest {
 	@Test
 	public void testSetLastName_True() {
 		user1.setLastName(DEFAULT_LAST);
-		assertTrue(user1.getLastName() == DEFAULT_LAST);
+		assertTrue(user1.getLastName().equals(DEFAULT_LAST));
 	}
 
 	/**
@@ -334,7 +327,7 @@ public class UserTest {
 	@Test
 	public void testSetLastName_False() {
 		user1.setLastName(DEFAULT_LAST);
-		assertFalse(user1.getLastName() == OTHER_LAST);
+		assertFalse(user1.getLastName().equals(OTHER_LAST));
 	}
 
 	/**
@@ -361,7 +354,7 @@ public class UserTest {
 	@Test
 	public void testSetAddress_True() {
 		user1.setAddress(DEFAULT_ADDRESS);
-		assertTrue(user1.getAddress() == DEFAULT_ADDRESS);
+		assertTrue(user1.getAddress().equals(DEFAULT_ADDRESS));
 	}
 
 	/**
@@ -370,7 +363,7 @@ public class UserTest {
 	@Test
 	public void testSetAddress_False() {
 		user1.setAddress(DEFAULT_ADDRESS);
-		assertFalse(user1.getAddress() == OTHER_ADDRESS);
+		assertFalse(user1.getAddress().equals(OTHER_ADDRESS));
 	}
 
 	/**
