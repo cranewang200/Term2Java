@@ -52,12 +52,9 @@ return getWeeklySalary();
 @Override
 	public String toString() {
 		String salariedProgrammerOutput = "";
-		salariedProgrammerOutput += "salaried programmer:" + getFirstName()  + " " + getLastName()+"\n";
-		salariedProgrammerOutput += "social security number:" + getSocialSecurityNumber()+"\n";
-		salariedProgrammerOutput += "birth month and year:" + getBirthDate()+"\n";
+		salariedProgrammerOutput += "salaried programmer:" ;
+		salariedProgrammerOutput += super.toString()+ "\n";
 		salariedProgrammerOutput +=  "weekly salary:" + getWeeklySalary();
-//		salariedProgrammerOutput += "earned $" + earnings()+"\n";
-		
 		return salariedProgrammerOutput;
 	}
 //END

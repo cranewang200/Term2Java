@@ -19,6 +19,8 @@ public static void main(String[] args) {
  BasePlusCommissionProgrammer basePlusCommissionProgrammer = 
     new BasePlusCommissionProgrammer(
     "John", "Mark", "234-44-5678", 3, 1978, 9000, .04, 300);
+ ActionProgrammer actionProgrammer = new ActionProgrammer(
+		 "Harry", "Porter", "987-88-1234", 2, 1700, 20, 33);
 
  System.out.println("Programmers are processed individually:\n");
  
@@ -40,11 +42,12 @@ public static void main(String[] args) {
    // Hint: How many elements array do you need to create? DO SO HERE!!!
    
    //START
-  Programmer[] programmer = new Programmer[4];
+  Programmer[] programmer = new Programmer[5];
   programmer[0] = salariedProgrammer;
   programmer[1] = hourlyProgrammer;
   programmer[2] = commissionProgrammer;
   programmer[3] = basePlusCommissionProgrammer;
+  programmer[4] = actionProgrammer;
    //END
 
    
@@ -97,9 +100,9 @@ public static void main(String[] args) {
     // otherwise just state what this programmer currently earned.
 
     //START
-      if(currentMonth == currentProgrammer.getBirthDate()) {
+      if(currentMonth == currentProgrammer.getBirthDate().getMonth()) {
    // 	  System.err.print("plus $500.00 birthday bonus");
-    	  System.out.print("earned: $" + currentProgrammer.earnings() + " plus $500.00 birthday bonus\n\n");
+    	  System.out.print("earned: $" + currentProgrammer.earnings() + ", plus $500.00 birthday bonus\n\n");
       }
       else {
     	 System.out.print("earned: $" + currentProgrammer.earnings() +"\n\n");

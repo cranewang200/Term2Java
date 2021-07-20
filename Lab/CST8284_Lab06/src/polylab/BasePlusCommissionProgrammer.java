@@ -48,12 +48,8 @@ return getBaseSalary() + super.earnings();
 @Override
 	public String toString() {
 	 String basePlusCommissionProgrammerOutput = "";
-	 basePlusCommissionProgrammerOutput += "base-salaried commission programmer: " + getFirstName() +" "+ getLastName()+"\n";
-	 basePlusCommissionProgrammerOutput += "social security number:" + getSocialSecurityNumber()+"\n";
-	 basePlusCommissionProgrammerOutput += "birth month and year:" + getBirthDate()+"\n";
-	 basePlusCommissionProgrammerOutput += "gross sales: " + getGrossSales() +"; commission rate:"
-			 								+ getCommissionRate() + "; base salary:" + getBaseSalary();
-//	 basePlusCommissionProgrammerOutput += "earned $" + earnings()+"\n";
+	 basePlusCommissionProgrammerOutput += "base-salaried ";
+	 basePlusCommissionProgrammerOutput += super.toString();
 		return basePlusCommissionProgrammerOutput;
 	}
 //END

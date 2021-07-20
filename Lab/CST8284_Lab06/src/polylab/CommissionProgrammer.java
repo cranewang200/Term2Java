@@ -74,11 +74,10 @@ return getCommissionRate() * getGrossSales();
 @Override
 	public String toString() {
 		String commissionProgrammerOutput = "";
-		commissionProgrammerOutput += "commission programmer :" + getFirstName() + " " + getLastName() +"\n";
-		commissionProgrammerOutput += "social security number:" + getSocialSecurityNumber()+"\n";
-		commissionProgrammerOutput += "birth month and year:" + getBirthDate()+"\n";
-		commissionProgrammerOutput += "gross sales:" + getGrossSales() +";"+ "commission rate:" + getCommissionRate();
-//		commissionProgrammerOutput += "earned $" + earnings()+"\n";
+		commissionProgrammerOutput += "commission programmer :" ;
+		commissionProgrammerOutput += super.toString()+ "\n";
+		commissionProgrammerOutput += "gross sales:" + getGrossSales() +";"+ "commission rate:" + getCommissionRate() ;
+
 		return commissionProgrammerOutput;
 	}
 //END

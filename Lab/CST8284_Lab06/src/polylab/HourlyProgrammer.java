@@ -78,11 +78,10 @@ else {
 @Override
 	public String toString() {
 		String hourlyProgrammerOutput = "";
-		hourlyProgrammerOutput += "hourly programmer:" + getFirstName()  + " " + getLastName()+"\n";
-		hourlyProgrammerOutput += "social security number:" + getSocialSecurityNumber()+"\n";
-		hourlyProgrammerOutput += "birth month and year:" + getBirthDate()+"\n";
+		hourlyProgrammerOutput += "hourly programmer:";
+		hourlyProgrammerOutput += super.toString()+ "\n";
 		hourlyProgrammerOutput += "hourly wage:" + getWage() + "; hours worked:" + getHours();
-//		hourlyProgrammerOutput += "earned $" + earnings()+"\n";
+
 		return hourlyProgrammerOutput;
 	}
 //END
