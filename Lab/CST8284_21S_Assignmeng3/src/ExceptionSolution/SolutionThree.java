@@ -5,7 +5,7 @@ package ExceptionSolution;
  * Author Name: Ming Wang
  * Class Name: Assignment 3
  * Date:Aug 7, 2021
- *
+ * Description: Practice the Exceptions
  */
 
 /**

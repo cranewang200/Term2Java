@@ -23,7 +23,7 @@ public class SolutionFour {
 			e.printStackTrace();
 		}
 		
-		Exception ioxException = new IOException();
+		IOException ioxException = new IOException();
 	
 		try {
 

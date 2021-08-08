@@ -8,6 +8,7 @@ import java.util.Scanner;
  * Author Name: Ming Wang
  * Class Name: Assignment 4
  * Date:Aug 7, 2021
+ *  Description: Practice the Exceptions
  */
 /**
  * outter class SolutionTwo
