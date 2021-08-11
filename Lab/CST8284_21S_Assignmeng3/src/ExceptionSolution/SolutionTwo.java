@@ -1,6 +1,8 @@
 package ExceptionSolution;
 
 import java.io.File;
+import java.io.IOException;
+//import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
  * 
@@ -10,20 +12,24 @@ import java.util.Scanner;
  * Date:Aug 7, 2021
  *  Description: Practice the Exceptions
  */
+
 /**
  * outter class SolutionTwo
  */
 public class SolutionTwo {
-
+	/*start point of the program*/
 	public static void main(String[] args) {
 		//try catch 1 ExceptionBlue
 		//use use print() to output the message
 		SolutionTwo.ExceptionBlue blue = new SolutionTwo().new ExceptionBlue();
 		try {
-			blue.addSuppressed(null);
-		} catch (Exception e) {
+
+			throw new SolutionTwo().new ExceptionBlue(); //throw exception directly
+			
+		} catch (ExceptionBlue e) {
 			System.out.println("ExceptionBlue is catching");
 			System.out.println("Message of the Exception is ExceptionBlue");
+	//		e.printStackTrace();
 		}finally {
 			System.out.println("ExceptionBlue is catched");
 		}
@@ -33,12 +39,13 @@ public class SolutionTwo {
 		System.out.println();
 		SolutionTwo.ExceptionYellow yellow = new SolutionTwo().new ExceptionYellow();
 		try {
-			yellow= null;
-			yellow.toString();
-		} catch (Exception e) {
+
+			throw new SolutionTwo().new ExceptionYellow(); //throw exception directly
+		} catch (ExceptionYellow e) {
 			
 			System.err.println("ExceptionYellow is catching");
 			System.err.println("Message of the Exception is ExceptionYellow");
+		
 		}finally {
 			System.err.println("ExceptionYellow is catched");
 		}
@@ -48,9 +55,9 @@ public class SolutionTwo {
 		System.out.println();
 		try {
 			Scanner scanner = new Scanner(new File("input.txt"));			
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("IOException is catching");
-			System.out.println("exception of getMessage() is" + e.getMessage());
+			System.out.println("exception of getMessage() is " + e.getMessage());
 		}finally {
 			System.out.println("IOException is catched");
 		}
@@ -61,7 +68,7 @@ public class SolutionTwo {
 		Object object = null;
 		try {
 			object.toString();
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			System.err.println("Null Pointer Exception is catching");
 			e.printStackTrace();
 		}finally {
